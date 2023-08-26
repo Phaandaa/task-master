@@ -10,7 +10,8 @@ import styles from "./Navbar.module.css";
 export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-  const { document, error } = useDocument("userEnergyAndPoints", user.uid);
+  const { document, error } = useDocument("userEnergyAndPoints", user?.uid);
+  const [content, setContent]=useState("");
   const [buttonText, setButtonText] = useState(
     "Welcome, " + (user ? user.displayName : "")
   );
