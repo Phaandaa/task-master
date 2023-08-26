@@ -48,7 +48,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <ul>
-        <li className={styles.title}>TaskMaster</li>
+        <li className={styles.title}><Link to="/">TaskMaster</Link></li>
 
         {!user && (
           <>
