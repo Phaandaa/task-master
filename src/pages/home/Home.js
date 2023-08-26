@@ -9,11 +9,9 @@ import styles from "./Home.module.css";
 // components
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
-import TaskForm from './TaskForm'
-import TaskList from './TaskList'
 
 export default function Home() {
-  const { user } = useAuthContext()
+  const { user } = useAuthContext();
   const { documents, error } = useCollection(
     "transactions",
     ["uid", "==", user?.uid],
@@ -25,7 +23,7 @@ export default function Home() {
     <div className={styles.container}>
       <div className={styles.content}>
         {error && <p>{error}</p>}
-        {documents && <TaskList tasks={documents} />}
+        {documents && <TransactionList transactions={documents} />}
       </div>
       <div className={styles.sidebar}>
         <TaskForm uid={user.uid} />

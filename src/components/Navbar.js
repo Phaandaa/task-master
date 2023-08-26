@@ -11,7 +11,7 @@ export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const { document, error } = useDocument("userEnergyAndPoints", user?.uid);
-  const [content, setContent]=useState("");
+  const [content, setContent] = useState("");
   const [buttonText, setButtonText] = useState(
     "Welcome, " + (user ? user.displayName : "")
   );
@@ -49,7 +49,9 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <ul>
-        <li className={styles.title}><Link to="/">TaskMaster</Link></li>
+        <li className={styles.title}>
+          <Link to="/">TaskMaster</Link>
+        </li>
 
         {!user && (
           <>
