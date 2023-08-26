@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useFirestore } from '../../hooks/useFirestore'
 
-export default function TransactionForm({ uid }) {
+export default function TaskForm({ uid }) {
   const [name, setName] = useState('')
-  const [amount, setAmount] = useState('')
-  const { addDocument, response } = useFirestore('transactions')
+  const [description, setDescription] = useState('')
+  const { addDocument, response } = useFirestore('tasks')
 
   const handleSubmit = (e) => {
     e.preventDefault()
     addDocument({
       uid, 
       name, 
-      amount,
+      description,
+      subtask: [],
     })
   }
 
@@ -19,16 +20,16 @@ export default function TransactionForm({ uid }) {
   useEffect(() => {
     if (response.success) {
       setName('')
-      setAmount('')
+      setDescription('')
     }
   }, [response.success])
 
   return (
     <>
-      <h3>Add a Transaction</h3>
+      <h3>Add a Task</h3>
       <form onSubmit={handleSubmit}>
         <label>
-          <span>Transaction name:</span>
+          <span>Task name:</span>
           <input 
             type="text"
             required
@@ -37,15 +38,14 @@ export default function TransactionForm({ uid }) {
           />
         </label>
         <label>
-          <span>Amount ($):</span>
-          <input
-            type="number"
+          <span>Description:</span>
+          <textarea
             required
-            onChange={(e) => setAmount(e.target.value)} 
-            value={amount} 
+            onChange={(e) => setDescription(e.target.value)} 
+            value={description} 
           />
         </label>
-        <button>Add Transaction</button>
+        <button>Break Down Task</button>
       </form>
     </>
   )
