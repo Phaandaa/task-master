@@ -10,6 +10,8 @@ export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
   console.log(user);
+  console.log(user.energy);
+  console.log(user.displayName);
 
   const [buttonText, setButtonText] = useState("Welcome, "+(user ? user.displayName : ""));
   const buttonRef = useRef(null);
