@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
+import { useDocument } from "../hooks/useDocument";
 
 // styles
 import styles from "./Navbar.module.css";
@@ -9,16 +10,15 @@ import styles from "./Navbar.module.css";
 export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-  console.log(user);
-  console.log(user.energy);
-  console.log(user.displayName);
-
-  const [buttonText, setButtonText] = useState("Welcome, "+(user ? user.displayName : ""));
+  const { document, error } = useDocument("userEnergyAndPoints", user.uid);
+  const [buttonText, setButtonText] = useState(
+    "Welcome, " + (user ? user.displayName : "")
+  );
   const buttonRef = useRef(null);
 
   useEffect(() => {
     if (user) {
-      setButtonText("Welcome, "+user.displayName);
+      setButtonText("Welcome, " + user.displayName);
     } else {
       setButtonText("Login");
     }
@@ -28,7 +28,7 @@ export default function Navbar() {
       buttonRef.current.style.width = buttonWidth + "px";
     }
   }, [user]);
-  
+
   const handleMouseOver = () => {
     if (user) {
       setButtonText("Logout");
@@ -64,14 +64,26 @@ export default function Navbar() {
         {user && (
           <>
             <li>
-              Energy <button className="btn">100 pts</button>
+              <div className={styles.energyContainer}>
+                <img
+                  src="/flash.png"
+                  alt="Energy Logo"
+                  className={styles.energyLogo}
+                />
+                <button
+                  className="btn"
+                  title="You are given 100 points every day. Different tasks will take up different amount of points."
+                >
+                  {document ? document["energy"] : ""} pts
+                </button>
+              </div>
             </li>
             <li>
               <Link to="/friends">Friends</Link>
             </li>
             <li>
               <button
-                className="btn welcome-btn"
+                className="btn"
                 onClick={logout}
                 onMouseOver={handleMouseOver}
                 onMouseOut={handleMouseOut}

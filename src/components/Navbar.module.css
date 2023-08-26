@@ -24,3 +24,11 @@
   color: #333;
   text-decoration: none;
 }
+.energyLogo {
+  max-width: 30px;
+  max-height: 30px;
+}
+.energyContainer {
+  display: inline-flex;
+  align-items: center;
+}
