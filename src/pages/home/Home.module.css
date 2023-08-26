@@ -90,3 +90,9 @@
   font-size: 0.9em;
   cursor: pointer;
 }
+.duration {
+  display:inline-flex;
+}
+.time {
+  margin:5px;
+}

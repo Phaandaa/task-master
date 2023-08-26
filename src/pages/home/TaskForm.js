@@ -4,6 +4,7 @@ import { useFirestore } from '../../hooks/useFirestore'
 export default function TaskForm({ uid }) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [duration, setDuration] = useState(0)
   const { addDocument, response } = useFirestore('tasks')
 
   const handleSubmit = (e) => {
@@ -12,6 +13,7 @@ export default function TaskForm({ uid }) {
       uid, 
       name, 
       description,
+      duration,
       subtask: [],
     })
   }
@@ -21,6 +23,7 @@ export default function TaskForm({ uid }) {
     if (response.success) {
       setName('')
       setDescription('')
+      setDuration('')
     }
   }, [response.success])
 
@@ -41,8 +44,21 @@ export default function TaskForm({ uid }) {
           <span>Description:</span>
           <textarea
             required
+            cols="30"
+            rows="5"
             onChange={(e) => setDescription(e.target.value)} 
             value={description} 
+          />
+        </label>
+        <label>
+          <span>Duration (hr):</span>
+          <input 
+            type="number"
+            required
+            min="0"
+            max="24"
+            onChange={(e) => setDuration(e.target.value)} 
+            value={duration} 
           />
         </label>
         <button>Break Down Task</button>
