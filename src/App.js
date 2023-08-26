@@ -3,6 +3,7 @@ import { useAuthContext } from './hooks/useAuthContext'
 
 // pages & components
 import Home from './pages/home/Home'
+import Friends from './pages/friends/Friends'
 import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
 import Navbar from './components/Navbar'
@@ -27,6 +28,10 @@ function App() {
             <Route path="/signup">
               {user && user.displayName && <Redirect to="/" />}
               {!user && <Signup />}
+            </Route>
+            <Route path="/friends">
+              {!user && <Redirect to="/login" />}
+              {user && <Friends />}
             </Route>
           </Switch>
         </BrowserRouter>

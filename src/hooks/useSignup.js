@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { projectAuth } from '../firebase/config'
+import { projectAuth, projectFirestore } from '../firebase/config'
 import { useAuthContext } from './useAuthContext'
 
 export const useSignup = () => {
@@ -22,6 +22,27 @@ export const useSignup = () => {
 
       // add display name to user
       await res.user.updateProfile({ displayName })
+
+      // create user id and username mapping
+      await projectFirestore.collection('usernameMapping').doc(res.user.uid).set({displayName})
+
+      // create user energy and points document
+      await projectFirestore.collection('userEnergyAndPoints').doc(res.user.uid).set({
+        energy: 100,
+        points: 0
+      })
+
+      // create user friends document
+      await projectFirestore.collection('userFriendData').doc(res.user.uid).set({
+        friends: [],
+        incomingRequest: [],
+        outgoingRequest: []
+      })
+
+      // create user progress document
+      await projectFirestore.collection('userProgress').doc(res.user.uid).set({
+        task1: []
+      })
 
       // dispatch login action
       dispatch({ type: 'LOGIN', payload: res.user })

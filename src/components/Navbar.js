@@ -8,6 +8,7 @@ import styles from './Navbar.module.css'
 export default function Navbar() {
   const { logout } = useLogout()
   const { user } = useAuthContext()
+  console.log(user)
 
   return (
     <nav className={styles.navbar}>
@@ -24,6 +25,7 @@ export default function Navbar() {
         {user && (
           <>
             <li>hello, {user.displayName}</li>
+            <li><Link to="/friends">Friends</Link></li>
             <li>
               <button className="btn" onClick={logout}>Logout</button>
             </li>

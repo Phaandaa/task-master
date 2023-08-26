@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSignup } from '../../hooks/useSignup'
+import { useFirestore } from '../../hooks/useFirestore'
 
 // styles
 import styles from './Signup.module.css'
